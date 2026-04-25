@@ -1,0 +1,41 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>net6.0</TargetFramework>
+    <ImplicitUsings>enable</ImplicitUsings>
+    <Nullable>disable</Nullable>
+    <LangVersion>latest</LangVersion>
+    <AppendTargetFrameworkToOutputPath>false</AppendTargetFrameworkToOutputPath>
+    <CopyLocalLockFileAssemblies>false</CopyLocalLockFileAssemblies>
+
+    <GameDir Condition="'$(GameDir)' == ''">E:\SteamLibrary\steamapps\common\Vampire Crawlers</GameDir>
+    <BepInExDir>$(GameDir)\BepInEx</BepInExDir>
+    <BepInExCoreDir>$(BepInExDir)\core</BepInExCoreDir>
+    <BepInExInteropDir>$(BepInExDir)\interop</BepInExInteropDir>
+    <BepInExPluginsDir>$(BepInExDir)\plugins</BepInExPluginsDir>
+    <DeployToGame Condition="'$(DeployToGame)' == ''">true</DeployToGame>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Reference Include="0Harmony" HintPath="$(BepInExCoreDir)\0Harmony.dll" Private="false" />
+    <Reference Include="BepInEx.Core" HintPath="$(BepInExCoreDir)\BepInEx.Core.dll" Private="false" />
+    <Reference Include="BepInEx.Unity.Common" HintPath="$(BepInExCoreDir)\BepInEx.Unity.Common.dll" Private="false" />
+    <Reference Include="BepInEx.Unity.IL2CPP" HintPath="$(BepInExCoreDir)\BepInEx.Unity.IL2CPP.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Common" HintPath="$(BepInExCoreDir)\Il2CppInterop.Common.dll" Private="false" />
+    <Reference Include="Il2CppInterop.Runtime" HintPath="$(BepInExCoreDir)\Il2CppInterop.Runtime.dll" Private="false" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="Il2Cppmscorlib" HintPath="$(BepInExInteropDir)\Il2Cppmscorlib.dll" Private="false" />
+    <Reference Include="Il2CppSystem" HintPath="$(BepInExInteropDir)\Il2CppSystem.dll" Private="false" />
+    <Reference Include="Assembly-CSharp" HintPath="$(BepInExInteropDir)\Assembly-CSharp.dll" Private="false" />
+    <Reference Include="Pancake" HintPath="$(BepInExInteropDir)\Pancake.dll" Private="false" />
+    <Reference Include="UnityEngine" HintPath="$(BepInExInteropDir)\UnityEngine.dll" Private="false" />
+    <Reference Include="UnityEngine.CoreModule" HintPath="$(BepInExInteropDir)\UnityEngine.CoreModule.dll" Private="false" />
+  </ItemGroup>
+
+  <Target Name="CopyToBepInExPlugins" AfterTargets="Build" Condition="'$(DeployToGame)' == 'true' and Exists('$(BepInExPluginsDir)')">
+    <Copy SourceFiles="$(TargetPath)" DestinationFolder="$(BepInExPluginsDir)" />
+  </Target>
+
+</Project>
