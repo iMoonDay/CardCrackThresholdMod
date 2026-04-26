@@ -4,7 +4,7 @@
 
 ## 简介
 
-在 **Vampire Crawlers** 中，同一张卡牌在一回合内重复使用过多时，卡牌会逐渐出现「裂纹」效果（卡牌受损）。
+在 **吸血鬼爬行者** 中，同一张卡牌在一回合内重复使用过多时，卡牌会逐渐出现「裂纹」效果（卡牌受损）。
 
 本模组基于 [BepInEx](https://github.com/BepInEx/BepInEx) 框架开发，让你可以**自由设定**触发裂纹的次数阈值。默认设为 **999**（几乎不触发），你可以按需调低，让游戏更具挑战性或符合个人偏好。
 
@@ -13,13 +13,14 @@
 - **自定义裂纹触发阈值** — 在 BepInEx 配置文件中修改 `TimesPlayedToStartCracking` 的值，即可控制同一张卡牌在一回合内使用多少次后开始出现裂纹。
   - 默认值：**999**（相当于几乎不会触发）
   - 最小值：**1**（每使用一次就立刻触发）
+- **快捷键临时切换** — 模组启动后默认立即生效。按下 `F8` 可临时还原，再次按下会重新启用配置文件中的阈值。
 
 ## 安装
 
 ### 前置要求
 
 - 已安装 [BepInEx](https://docs.bepinex.dev/)（IL2CPP 版本）
-- 游戏本体：**Vampire Crawlers**
+- 游戏本体：**吸血鬼爬行者**
 
 ### 步骤
 
@@ -39,6 +40,7 @@ BepInEx/config/com.imoonday.cardcrackthresholdmod.cfg
 | 配置项 | 说明 | 默认值 |
 |--------|------|--------|
 | `TimesPlayedToStartCracking` | 同一张卡牌在一回合内使用多少次后开始出现裂纹。数值越大越难触发，设为 1 则每用一次就裂纹 | `999` |
+| `ToggleCustomThresholdKey` | 临时还原的快捷键 | `F8` |
 
 ## 构建
 
@@ -51,6 +53,7 @@ dotnet build
 ## 技术实现
 
 - 通过 **HarmonyLib** 对游戏内 `GlobalConfig.OnEnable` 方法注入补丁（Postfix），在全局配置初始化时自动写入自定义阈值
+- 支持通过 `F8` 临时还原游戏默认效果
 - 基于 **.NET 6.0** 构建，兼容游戏的 **IL2CPP** 运行时
 
 ## 许可证
@@ -70,6 +73,7 @@ A [BepInEx](https://github.com/BepInEx/BepInEx) mod for **Vampire Crawlers** tha
 - **Configurable card crack threshold** — Adjust the `TimesPlayedToStartCracking` parameter via BepInEx config to control when cards begin to crack after repeated same-turn plays.
   - Default: **999**
   - Minimum: **1**
+- **Temporary hotkey toggle** — The mod starts active. Press `F8` to temporarily restore the default behavior. Press it again to reapply the configured threshold.
 
 ## Installation
 
@@ -96,6 +100,7 @@ Available options:
 | Config Key | Description | Default |
 |------------|-------------|---------|
 | `TimesPlayedToStartCracking` | The number of times the same card must be played in one turn before it starts cracking | `999` |
+| `ToggleCustomThresholdKey` | Hotkey used for temporary restore | `F8` |
 
 ## Build
 
@@ -108,6 +113,7 @@ After building, the DLL is automatically copied to `BepInEx/plugins/` (ensure `G
 ## Technical Details
 
 - Uses **HarmonyLib** to apply a Postfix patch on `GlobalConfig.OnEnable`, ensuring the custom threshold is applied when the game's global config initializes.
+- Supports temporarily restoring the default behavior with `F8`.
 - Target framework: **.NET 6.0**
 - Compatible with **IL2CPP** backend
 
